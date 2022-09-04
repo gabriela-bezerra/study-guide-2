@@ -42,7 +42,7 @@ def without_duplicates(words):
         <class 'list'>
     """
 
-    return []
+    return [word for word in sorted(set(words))]
 
 
 def find_unique_common_items(items1, items2):
@@ -78,7 +78,7 @@ def find_unique_common_items(items1, items2):
         [2]
     """
 
-    return set()
+    return set(items1) & set(items2)
 
 
 def get_sum_zero_pairs(numbers):
@@ -107,8 +107,9 @@ def get_sum_zero_pairs(numbers):
         >>> sort_pairs( get_sum_zero_pairs([1, 3, -1, 1, 1, 0]) )
         [[-1, 1], [0, 0]]
     """
+    unique = set(numbers)
 
-    return []
+    return [[-n, n] for n in unique if n >= 0 and -n in unique]
 
 
 def top_chars(phrase):
@@ -135,8 +136,26 @@ def top_chars(phrase):
     Do not count spaces, but count all other characters.
 
     """
+    common_dict = {}
 
-    return []
+    count = 0
+
+    for letter in phrase:
+        if letter == " ":
+            continue
+        common_dict[letter] = common_dict.get(letter, 0) + 1
+
+        if common_dict[letter] > count:
+            count = common_dict[letter]
+
+    most_common = []
+
+    for letter, n in common_dict.items():
+        if n == count:
+            most_common.append(letter)
+
+    return most_common
+
 
 #####################################################################
 # You can ignore everything below this.
